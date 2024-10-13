@@ -38,7 +38,7 @@ export default function ProductCards() {
               />
               <div className="text-center p-6">
                 <Link
-                  href={`/category/${category.title.toLowerCase()}`}
+                  href="/category"
                   className="text-xl font-semibold text-gray-900 hover:text-gray-700 transition-colors duration-300"
                 >
                   {category.title}
