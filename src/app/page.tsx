@@ -1,17 +1,16 @@
 import ProductCards from "@/components/cards/ProductCards";
-import Navbar from "@/components/navbar/Navbar";
 
 export default function Home() {
   return (
-    <div className=" items-center justify-items-center min-h-screen p-0 font-[family-name:var(--font-geist-sans)]">
-      <header>
-        <Navbar />
-      </header>
-      <main className="flex justify-center gap-8 row-start-2 items-center sm:items-start">
-        <h1>Hello</h1>
-        <ProductCards />
+    <div className="flex flex-col items-center justify-center min-h-screen p-0 font-[family-name:var(--font-geist-sans)]">
+      <main className="flex flex-col gap-8 items-center justify-center w-full">
+        <div className="w-full border border-red-500 h-[200px] flex justify-center items-center">
+          <h1>Hello</h1>
+        </div>
+        <div className="w-full flex justify-center">
+          <ProductCards />
+        </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center"></footer>
     </div>
   );
 }
