@@ -38,7 +38,7 @@ export default function ProductCards() {
               />
               <div className="text-center p-6">
                 <Link
-                  href={`/category/${category.title}`} // Lien dynamique basé sur le titre de la catégorie
+                  href={`/category/${encodeURIComponent(category.title)}`} // Lien dynamique avec encodeURIComponent
                   className="text-xl font-semibold text-gray-900 hover:text-gray-700 transition-colors duration-300"
                 >
                   {category.title}
