@@ -1,5 +1,6 @@
 "use client";
 
+import TrailProductCards from "@/components/cards/TrailProductCards";
 import { useParams } from "next/navigation";
 
 const productsByCategory: Record<string, string[]> = {
@@ -32,14 +33,7 @@ export default function CategoryPage() {
       <div className="w-full border border-red-500 h-[200px] flex justify-center items-center">
         <h1 className="text-center text-3xl font-bold">{decodedCategory}</h1>
       </div>
-
-      <ul>
-        {products.map((product, index) => (
-          <li key={index} className="text-lg">
-            {product}
-          </li>
-        ))}
-      </ul>
+      <TrailProductCards />
     </div>
   );
 }

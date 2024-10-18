@@ -45,7 +45,7 @@ export default function NavbarMenu() {
             {menu.items.map((item, itemIndex) => (
               <DropdownMenuItem key={itemIndex}>
                 <Link
-                  href={`/${menu.title.toLowerCase()}/${item.toLowerCase()}`}
+                  href={`/category/${menu.title.toLowerCase()}/${item.toLowerCase()}`}
                 >
                   {item}
                 </Link>
