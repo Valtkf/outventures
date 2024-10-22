@@ -35,6 +35,7 @@ export default function ProductCards() {
                 width={300}
                 height={200}
                 className="w-full h-48 object-cover"
+                priority
               />
               <div className="text-center p-6">
                 <Link

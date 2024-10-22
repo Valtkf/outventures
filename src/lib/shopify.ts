@@ -1,17 +1,60 @@
 import { gql, GraphQLClient } from "graphql-request";
+import { NextApiRequest, NextApiResponse } from "next";
 
 // Variables d'environnement avec typage
-const storefrontAccessToken = process.env.STOREFRONTACCESSTOKEN!;
-const endpoint = process.env.SHOPURL!;
+const storefrontAccessToken = process.env.NEXT_PUBLIC_STOREFRONT_ACCESS_TOKEN;
+const endpoint = process.env.NEXT_PUBLIC_SHOP_URL;
 
 console.log("Shop URL:", endpoint);
 console.log("Storefront Access Token:", storefrontAccessToken);
+if (!endpoint || !storefrontAccessToken) {
+  throw new Error("Missing environment variables. Check .env.local file.");
+}
 // Initialisation du client GraphQL
 const client = new GraphQLClient(endpoint, {
   headers: {
     "X-Shopify-Storefront-Access-Token": storefrontAccessToken,
   },
 });
+
+interface ProductNode {
+  id: string;
+  title: string;
+  handle: string;
+  priceRange: {
+    minVariantPrice: {
+      amount: string;
+    };
+  };
+  featuredImage: {
+    altText: string;
+    url: string;
+  };
+}
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  if (req.method === "POST") {
+    const { query, variables } = req.body;
+
+    try {
+      const data = await client.request(query, variables);
+      res.status(200).json(data);
+    } catch (error: unknown) {
+      // Spécification du type unknown ici
+      if (error instanceof Error) {
+        res.status(500).json({ error: error.message }); // Utilisation de error.message
+      } else {
+        res.status(500).json({ error: String(error) }); // Conversion en string si ce n'est pas une erreur
+      }
+    }
+  } else {
+    res.setHeader("Allow", ["POST"]);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
+  }
+}
 
 // Types pour les produits et autres réponses de Shopify
 interface Product {
@@ -49,14 +92,15 @@ interface Cart {
   };
 }
 
-interface GetProductsResponse {
-  products: {
-    edges: {
-      node: Product;
-    }[];
-  };
-}
+// interface GetProductsResponse {
+//   products: {
+//     edges: {
+//       node: Product;
+//     }[];
+//   };
+// }
 // Fonction pour récupérer les produits
+// Fonction pour récupérer les produits via l'API route
 export async function getProducts(): Promise<Product[]> {
   const query = gql`
     {
@@ -82,9 +126,22 @@ export async function getProducts(): Promise<Product[]> {
   `;
 
   try {
-    // Utiliser le type de la réponse ici
-    const data = await client.request<GetProductsResponse>(query);
-    return data.products.edges.map((edge) => edge.node);
+    // Faire une requête POST à l'API route
+    const response = await fetch("/api/shopify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ query }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Failed to fetch products");
+    }
+
+    return data.products.edges.map((edge: { node: ProductNode }) => edge.node);
   } catch (error) {
     throw new Error(
       `Error fetching products: ${
@@ -128,15 +185,13 @@ export const getProduct = async (id: string): Promise<Product> => {
   try {
     // Définir un type explicite pour la réponse attendue
     const data = await client.request<{ product: Product }>(query, variables);
-
-    // Assertion de type pour dire que `data` correspond à ce que l'on attend
     return data.product;
-  } catch (error) {
-    throw new Error(
-      `Error fetching product with ID ${id}: ${
-        error instanceof Error ? error.message : String(error)
-      }`
-    );
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(`Error fetching product with ID ${id}: ${error.message}`);
+    } else {
+      throw new Error(`Error fetching product with ID ${id}: ${String(error)}`);
+    }
   }
 };
 
@@ -166,17 +221,31 @@ export async function addToCart(
   };
 
   try {
-    const data = await client.request<{ cart: { id: string } }>(
-      mutation,
-      variables
-    );
+    // Faire la requête POST vers l'API route
+    const response = await fetch("/api/shopify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: mutation,
+        variables,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Failed to add item to cart");
+    }
+
     return data.cart.id;
   } catch (error: unknown) {
-    throw new Error(
-      `Error adding item to cart: ${
-        error instanceof Error ? error.message : String(error)
-      }`
-    );
+    if (error instanceof Error) {
+      throw new Error(`Error adding item to cart: ${error.message}`);
+    } else {
+      throw new Error(`Error adding item to cart: ${String(error)}`);
+    }
   }
 }
 
@@ -255,12 +324,16 @@ export async function retrieveCart(cartId: string): Promise<Cart> {
     // Explicitly typing the response
     const data = await client.request<{ cart: Cart }>(query, variables);
     return data.cart;
-  } catch (error) {
-    throw new Error(
-      `Error retrieving cart with ID ${cartId}: ${
-        error instanceof Error ? error.message : String(error)
-      }`
-    );
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(
+        `Error retrieving cart with ID ${cartId}: ${error.message}`
+      );
+    } else {
+      throw new Error(
+        `Error retrieving cart with ID ${cartId}: ${String(error)}`
+      );
+    }
   }
 }
 
