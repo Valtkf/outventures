@@ -21,7 +21,7 @@ const productCategories = [
 
 export default function ProductCards() {
   return (
-    <div className="py-12">
+    <div className="">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row gap-8">
           {productCategories.map((category, index) => (
@@ -35,10 +35,11 @@ export default function ProductCards() {
                 width={300}
                 height={200}
                 className="w-full h-48 object-cover"
+                priority
               />
               <div className="text-center p-6">
                 <Link
-                  href="/category"
+                  href={`/category/${encodeURIComponent(category.title)}`} // Lien dynamique avec encodeURIComponent
                   className="text-xl font-semibold text-gray-900 hover:text-gray-700 transition-colors duration-300"
                 >
                   {category.title}
