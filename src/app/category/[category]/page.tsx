@@ -3,8 +3,6 @@
 import TrailProductCards from "@/components/cards/TrailProductCards";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getProducts } from "../../../lib/shopify";
-import { Product } from "../../../lib/types";
 
 const productsByCategory: Record<string, string[]> = {
   Trail: ["Veste Trail", "Chaussures Trail", "Sacs hydratation"],
