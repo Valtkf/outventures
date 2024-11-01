@@ -30,27 +30,22 @@ async function getData(slug: string): Promise<fullProduct> {
 }
 
 export default function CategoryPage() {
-  // État pour stocker les données du produit
   const [data, setData] = useState<fullProduct | null>(null);
   const routeParams = useParams();
 
-  // Extraction des paramètres de la route
   const category = Array.isArray(routeParams.category)
     ? routeParams.category[0]
     : routeParams.category;
-
   const slug = Array.isArray(routeParams.slug)
     ? routeParams.slug[0]
     : routeParams.slug;
 
-  // Décodage de la catégorie pour afficher dynamiquement le titre
   const decodedCategory = category ? decodeURIComponent(category) : null;
 
-  // Utiliser `useEffect` pour récupérer les données
   useEffect(() => {
     if (slug) {
-      getData(slug).then((data) => {
-        setData(data);
+      getData(slug).then((productData) => {
+        setData(productData);
       });
     }
   }, [slug]);
@@ -64,6 +59,15 @@ export default function CategoryPage() {
           <div className="text-center">Catégorie non trouvée</div>
         )}
       </div>
+
+      {/* Utiliser les données du produit si elles sont chargées */}
+      {data && (
+        <div>
+          <h2>{data.name}</h2> {/* Affiche le nom du produit */}
+          <p>{data.description}</p> {/* Affiche la description du produit */}
+          {/* Autres détails du produit */}
+        </div>
+      )}
 
       <div className="grid gap-8 md:grid-cols-2">
         <ImageGallery />
