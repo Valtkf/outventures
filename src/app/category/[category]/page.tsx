@@ -11,7 +11,7 @@ async function getData(slug: string): Promise<fullProduct> {
   const query = `*[_type == "product" && slug.current == "${slug}"][0]{
     _id,
     images[]{
-      _key,‡
+      _key,
       _type,
       asset->{
         _ref,
@@ -23,6 +23,8 @@ async function getData(slug: string): Promise<fullProduct> {
     description,
     "slug": slug.current,
     "categoryName": category->name,
+    "sportcategoryName": sportcategory->name,
+    "imageUrl": images[0].asset->url
   }`;
 
   const data = await client.fetch(query);
@@ -70,7 +72,8 @@ export default function CategoryPage() {
       )}
 
       <div className="grid gap-8 md:grid-cols-2">
-        <ImageGallery />
+        {/* Passer decodedCategory à ImageGallery */}
+        <ImageGallery selectedCategory={decodedCategory} />
       </div>
     </div>
   );

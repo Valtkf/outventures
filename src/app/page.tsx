@@ -1,4 +1,4 @@
-import ProductCards from "@/components/cards/ProductCards";
+import CategoryCards from "../components/cards/CategoryCards";
 
 export default function Home() {
   return (
@@ -8,7 +8,7 @@ export default function Home() {
           <h1>Bannière Offres ou promos</h1>
         </div>
         <div className="w-full flex justify-center">
-          <ProductCards />
+          <CategoryCards />
         </div>
       </main>
     </div>
