@@ -24,7 +24,7 @@ const menuItems = [
   },
   {
     title: "Accessoires",
-    items: ["Bijoux", "Sacs", "Montres"],
+    items: ["Sacs", "Montres"],
   },
 ];
 
@@ -44,9 +44,7 @@ export default function NavbarMenu() {
           <DropdownMenuContent className="bg-white">
             {menu.items.map((item, itemIndex) => (
               <DropdownMenuItem key={itemIndex}>
-                <Link
-                  href={`/category/${menu.title.toLowerCase()}/${item.toLowerCase()}`}
-                >
+                <Link href={`/category/${encodeURIComponent(item)}`}>
                   {item}
                 </Link>
               </DropdownMenuItem>

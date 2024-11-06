@@ -1,5 +1,3 @@
-import {title} from 'process'
-
 export default {
   name: 'product',
   type: 'document',
@@ -19,7 +17,7 @@ export default {
     {
       name: 'description',
       type: 'text',
-      title: 'Description of product',
+      title: 'Description of Product',
     },
     {
       name: 'slug',
@@ -38,11 +36,13 @@ export default {
       name: 'category',
       title: 'Product Category',
       type: 'reference',
-      to: [
-        {
-          type: 'category',
-        },
-      ],
+      to: [{type: 'category'}],
+    },
+    {
+      name: 'sportcategory',
+      title: 'SportsCategory',
+      type: 'reference',
+      to: [{type: 'sportcategory'}],
     },
   ],
 }
