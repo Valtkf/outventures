@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { fullProduct } from "@/app/interface";
 import { client } from "@/app/lib/sanity";
 import { useParams } from "next/navigation";
-import ImageGallery from "@/components/image-gallery/ImageGallery";
+import ImageGallery from "@/components/cards/ProductCards";
 
 // Fonction pour obtenir les données
 async function getData(slug: string): Promise<fullProduct> {
@@ -53,8 +53,8 @@ export default function CategoryPage() {
   }, [slug]);
 
   return (
-    <div className="bg-white">
-      <div className="w-full border border-red-500 h-[200px] flex justify-center items-center">
+    <div className="">
+      <div className="w-full h-[200px] flex justify-center items-center">
         {decodedCategory ? (
           <h1 className="text-center text-3xl font-bold">{decodedCategory}</h1>
         ) : (
@@ -71,7 +71,7 @@ export default function CategoryPage() {
         </div>
       )}
 
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="">
         {/* Passer decodedCategory à ImageGallery */}
         <ImageGallery selectedCategory={decodedCategory} />
       </div>
