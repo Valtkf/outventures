@@ -44,5 +44,11 @@ export default {
       type: 'reference',
       to: [{type: 'sportcategory'}],
     },
+    {
+      name: 'subcategory',
+      title: 'SubCategory',
+      type: 'reference',
+      to: [{type: 'subcategory'}],
+    },
   ],
 }

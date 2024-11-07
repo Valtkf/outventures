@@ -8,25 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
-
-const menuItems = [
-  {
-    title: "Nos Univers",
-    items: ["Randonnée", "Trail", "Running"],
-  },
-  {
-    title: "Homme",
-    items: ["Vêtements", "Chaussures", "Accessoires"],
-  },
-  {
-    title: "Femme",
-    items: ["Vêtements", "Chaussures", "Accessoires"],
-  },
-  {
-    title: "Accessoires",
-    items: ["Sacs", "Montres"],
-  },
-];
+import { menuItems } from "./data-navbar/menu-items-data";
 
 export default function NavbarMenu() {
   return (

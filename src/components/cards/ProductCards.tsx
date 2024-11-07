@@ -1,44 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { client } from "@/app/lib/sanity";
 import Image from "next/image";
 import Link from "next/link";
+import { simplifiledProduct } from "@/app/interface";
+import { fetchProductsByCategory } from "./fetch-products";
+import ButtonCart from "../ui/button-cart/ButtonCart";
 
-// Typage pour un produit simplifié
-interface SimplifiedProduct {
-  _id: string;
-  price: number;
-  name: string;
-  slug: string;
-  categoryName: string;
-  sportcategoryName: string;
-  imageUrl: string;
-}
-
-// Fonction pour récupérer les produits
-async function fetchProductsByCategory(categoryName: string | null) {
-  const query = `*[_type == "product" ${
-    categoryName ? `&& sportcategory->name == "${categoryName}"` : ""
-  }][0...9] | order(_createdAt asc){
-    _id,
-    price,
-    name,
-    "slug": slug.current,
-    "categoryName": category->name,
-    "sportcategoryName": sportcategory->name,
-    "imageUrl": images[0].asset->url
-  }`;
-
-  const data = await client.fetch(query);
-  return data;
-}
-
-// Composant `ProductCards`
 interface ProductCardsProps {
   selectedCategory: string | null;
 }
 
 export default function ProductCards({ selectedCategory }: ProductCardsProps) {
-  const [products, setProducts] = useState<SimplifiedProduct[]>([]);
+  const [products, setProducts] = useState<simplifiledProduct[]>([]);
 
   useEffect(() => {
     async function loadProducts() {
@@ -72,14 +44,14 @@ export default function ProductCards({ selectedCategory }: ProductCardsProps) {
           <div className="p-6">
             <h3 className="text-xl font-bold text-gray-900">{product.name}</h3>
             <p className="text-gray-500 text-sm mt-2">{product.categoryName}</p>
-            <p className="text-gray-600 text-sm">{product.sportcategoryName}</p>
+            <p className="text-gray-600 text-sm">
+              {product.sportcategoryName} - {product.subcategoryName}
+            </p>
             <div className="flex items-center justify-between mt-4">
               <span className="text-gray-900 font-bold text-lg">
                 {product.price} €
               </span>
-              <button className="bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800">
-                Add to Cart
-              </button>
+              <ButtonCart />
             </div>
           </div>
         </div>
