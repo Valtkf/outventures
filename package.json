@@ -24,7 +24,8 @@
     "react-dom": "^18",
     "sanity": "^3.62.2",
     "tailwind-merge": "^2.5.3",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "winston": "^3.16.0"
   },
   "devDependencies": {
     "@types/node": "^20",
