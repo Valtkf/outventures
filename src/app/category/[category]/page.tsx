@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { fullProduct } from "@/app/interface";
 import { client } from "@/app/lib/sanity";
 import { useParams } from "next/navigation";
-import ImageGallery from "@/components/cards/ProductCards";
+import ProductCards from "@/components/cards/ProductCards";
 
 // Fonction pour obtenir les données
 async function getData(slug: string): Promise<fullProduct> {
@@ -24,6 +24,7 @@ async function getData(slug: string): Promise<fullProduct> {
     "slug": slug.current,
     "categoryName": category->name,
     "sportcategoryName": sportcategory->name,
+    "subcategoryName": subcategory->name,
     "imageUrl": images[0].asset->url
   }`;
 
@@ -38,11 +39,17 @@ export default function CategoryPage() {
   const category = Array.isArray(routeParams.category)
     ? routeParams.category[0]
     : routeParams.category;
+  const subcategory = Array.isArray(routeParams.subcategory)
+    ? routeParams.subcategory[0]
+    : routeParams.subcategory;
   const slug = Array.isArray(routeParams.slug)
     ? routeParams.slug[0]
     : routeParams.slug;
 
   const decodedCategory = category ? decodeURIComponent(category) : null;
+  const decodedSubCategory = subcategory
+    ? decodeURIComponent(subcategory)
+    : null;
 
   useEffect(() => {
     if (slug) {
@@ -72,8 +79,10 @@ export default function CategoryPage() {
       )}
 
       <div className="">
-        {/* Passer decodedCategory à ImageGallery */}
-        <ImageGallery selectedCategory={decodedCategory} />
+        <ProductCards
+          selectedCategory={decodedCategory}
+          selectedSubCategory={decodedSubCategory}
+        />
       </div>
     </div>
   );

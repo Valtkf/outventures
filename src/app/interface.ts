@@ -5,6 +5,7 @@ export interface simplifiledProduct {
   slug: string;
   categoryName: string;
   sportcategoryName: string;
+  subcategoryName: string;
   name: string;
 }
 
