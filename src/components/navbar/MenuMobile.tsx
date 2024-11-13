@@ -11,8 +11,11 @@ import Link from "next/link";
 
 const menuItems = [
   { title: "Trail" },
-  { title: "Randonnée" },
+  { title: "Rando" },
   { title: "Running" },
+  { title: "Hauts" },
+  { title: "Chaussures" },
+  { title: "Accessoires" },
 ];
 
 export default function MenuMobile() {

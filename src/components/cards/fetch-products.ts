@@ -1,9 +1,12 @@
 import { client } from "@/app/lib/sanity";
 
-export async function fetchProductsByCategory(categoryName: string | null) {
+export async function fetchProductsByCategory(
+  categoryName: string | null,
+  subcategoryName: string | null
+) {
   const query = `*[_type == "product" ${
     categoryName ? `&& sportcategory->name == "${categoryName}"` : ""
-  }][0...9] | order(_createdAt asc){
+  } ${subcategoryName ? `&& subcategory->name == "${subcategoryName}"` : ""}]{
       _id,
       price,
       name,
@@ -15,5 +18,6 @@ export async function fetchProductsByCategory(categoryName: string | null) {
     }`;
 
   const data = await client.fetch(query);
+  console.log("Fetched products:", data); // Vérifie ici
   return data;
 }

@@ -2,24 +2,24 @@ export const productCategories = [
   {
     title: "Trail",
     image: "/images/trail.webp",
-    links: ["T-Shirts", "Vestes", "Shorts", "Chaussures", "Sacs hydratation"],
+    links: ["Hauts", "Vestes", "Shorts", "Chaussures", "Sacs"],
   },
   {
-    title: "Randonnée",
+    title: "Rando",
     image: "/images/rando.webp",
     links: [
-      "T-Shirts",
+      "Hauts",
       "Vestes",
       "Pantalons",
       "Shorts",
       "Chaussures",
-      "Bâtons",
+      "Equipements",
     ],
   },
   {
     title: "Running",
     image: "/images/runningpic.webp",
-    links: ["T-Shirts", "Vestes", "Shorts", "Chaussures"],
+    links: ["Hauts", "Vestes", "Shorts", "Chaussures"],
   },
   {
     title: "Accessoires",

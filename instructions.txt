@@ -1,0 +1,1 @@
+i want add a dynamic display , for exemple when i click on the category Trail , it works and display all the product cards of the category Trail but i want do a dynamic display off subcategory like "Chaussures" for exemple , when i click on "Chaussures" of the category Trail , it displaying all product cards the categories Trail and "Chaussures"

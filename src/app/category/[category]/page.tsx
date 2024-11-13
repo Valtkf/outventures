@@ -39,11 +39,17 @@ export default function CategoryPage() {
   const category = Array.isArray(routeParams.category)
     ? routeParams.category[0]
     : routeParams.category;
+  const subcategory = Array.isArray(routeParams.subcategory)
+    ? routeParams.subcategory[0]
+    : routeParams.subcategory;
   const slug = Array.isArray(routeParams.slug)
     ? routeParams.slug[0]
     : routeParams.slug;
 
   const decodedCategory = category ? decodeURIComponent(category) : null;
+  const decodedSubCategory = subcategory
+    ? decodeURIComponent(subcategory)
+    : null;
 
   useEffect(() => {
     if (slug) {
@@ -73,8 +79,10 @@ export default function CategoryPage() {
       )}
 
       <div className="">
-        {/* Passer decodedCategory à ImageGallery */}
-        <ProductCards selectedCategory={decodedCategory} />
+        <ProductCards
+          selectedCategory={decodedCategory}
+          selectedSubCategory={decodedSubCategory}
+        />
       </div>
     </div>
   );
