@@ -1,7 +1,7 @@
 export const menuItems = [
   {
     title: "Nos Univers",
-    items: ["Rando", "Trail", "Running"],
+    items: ["Rando", "Trail", "Running", "Accessoires"],
   },
   {
     title: "Homme",

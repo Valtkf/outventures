@@ -47,36 +47,43 @@ export default function ProductCards({
             key={product._id}
             className="bg-white rounded-xl shadow-lg overflow-hidden max-w-sm mx-auto"
           >
-            <div className="relative">
-              <Image
-                src={product.imageUrl}
-                alt={`Image of ${product.name}`}
-                className="w-full h-[400px] object-cover"
-                width={400}
-                height={400}
-                priority
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <Link href={`/product/${product.slug}`}></Link>
+            <Link
+              key={product._id}
+              href={`/product/${product.slug}`}
+              className="block bg-white rounded-xl shadow-lg overflow-hidden max-w-sm mx-auto"
+            >
+              <div className="relative">
+                <Image
+                  src={product.imageUrl}
+                  alt={`Image of ${product.name}`}
+                  className="w-full h-[400px] object-cover"
+                  width={400}
+                  height={400}
+                  priority
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Link href={`/product/${product.slug}`}></Link>
+                </div>
               </div>
-            </div>
-            <div className="p-6">
-              <h3 className="text-xl font-bold text-gray-900">
-                {product.name}
-              </h3>
-              <p className="text-gray-500 text-sm mt-2">
-                {product.categoryName}
-              </p>
-              <p className="text-gray-600 text-sm">
-                {product.sportcategoryName} - {product.subcategoryName}
-              </p>
-              <div className="flex items-center justify-between mt-4">
-                <span className="text-gray-900 font-bold text-lg">
-                  {product.price} €
-                </span>
-                <ButtonCart />
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-gray-900">
+                  {product.name}
+                </h3>
+                <p className="text-gray-500 text-sm mt-2">
+                  {product.categoryName}
+                </p>
+                <p className="text-gray-600 text-sm">
+                  {product.sportcategoryName} - {product.subcategoryName}
+                </p>
+
+                <div className="flex items-center justify-between mt-4">
+                  <span className="text-gray-900 font-bold text-lg">
+                    {product.price} €
+                  </span>
+                  <ButtonCart />
+                </div>
               </div>
-            </div>
+            </Link>
           </div>
         ))}
       </div>
