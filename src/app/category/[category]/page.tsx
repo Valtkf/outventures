@@ -5,6 +5,8 @@ import { fullProduct } from "@/app/interface";
 import { client } from "@/app/lib/sanity";
 import { useParams } from "next/navigation";
 import ProductCards from "@/components/cards/ProductCards";
+import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
+// import Link from "next/link";
 
 // Fonction pour obtenir les données
 async function getData(slug: string): Promise<fullProduct> {
@@ -61,7 +63,10 @@ export default function CategoryPage() {
 
   return (
     <div className="">
-      <div className="w-full h-[200px] flex justify-center items-center">
+      <div className="mt-20">
+        <Breadcrumb category={category} />
+      </div>
+      <div className="w-full h-[100px] flex justify-center items-center">
         {decodedCategory ? (
           <h1 className="text-center text-3xl font-bold">{decodedCategory}</h1>
         ) : (
@@ -69,11 +74,9 @@ export default function CategoryPage() {
         )}
       </div>
 
-      {/* Utiliser les données du produit si elles sont chargées */}
       {data && (
         <div>
-          <h2>{data.name}</h2> {/* Affiche le nom du produit */}
-          <p>{data.description}</p> {/* Affiche la description du produit */}
+          {/* Affiche la description du produit */}
           {/* Autres détails du produit */}
         </div>
       )}

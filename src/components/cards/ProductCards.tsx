@@ -50,7 +50,7 @@ export default function ProductCards({
             <Link
               key={product._id}
               href={`/product/${product.slug}`}
-              className="block bg-white rounded-xl shadow-lg overflow-hidden max-w-sm mx-auto"
+              className="block overflow-hidden max-w-sm mx-auto"
             >
               <div className="relative">
                 <Image
