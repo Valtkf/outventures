@@ -79,6 +79,15 @@ export default function CategoryCards() {
           <ProductCards
             selectedCategory={selectedCategory}
             selectedSubCategory={selectedSubCategory}
+            productData={{
+              _id: "", // Ensure this is included
+              images: [], // Ensure this is included
+              price: 0, // Ensure this is included
+              slug: "", // Ensure this is included
+              categoryName: "", // Ensure this is included
+              name: "", // Ensure this is included
+              description: "", // Ensure this is included
+            }} // Added productData prop
           />
         </div>
       )}

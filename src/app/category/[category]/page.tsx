@@ -5,8 +5,9 @@ import { fullProduct } from "@/app/interface";
 import { client } from "@/app/lib/sanity";
 import { useParams } from "next/navigation";
 import ProductCards from "@/components/cards/ProductCards";
+import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
 
-// Fonction pour obtenir les données
+// Function to fetch product data
 async function getData(slug: string): Promise<fullProduct> {
   const query = `*[_type == "product" && slug.current == "${slug}"][0]{
     _id,
@@ -28,40 +29,36 @@ async function getData(slug: string): Promise<fullProduct> {
     "imageUrl": images[0].asset->url
   }`;
 
-  const data = await client.fetch(query);
-  return data;
+  return await client.fetch(query);
 }
 
 export default function CategoryPage() {
   const [data, setData] = useState<fullProduct | null>(null);
-  const routeParams = useParams();
+  const { category, subcategory, slug } = useParams();
 
-  const category = Array.isArray(routeParams.category)
-    ? routeParams.category[0]
-    : routeParams.category;
-  const subcategory = Array.isArray(routeParams.subcategory)
-    ? routeParams.subcategory[0]
-    : routeParams.subcategory;
-  const slug = Array.isArray(routeParams.slug)
-    ? routeParams.slug[0]
-    : routeParams.slug;
+  // Decode category and subcategory
+  const decodedCategory =
+    typeof category === "string" ? decodeURIComponent(category) : null;
+  const decodedSubCategory =
+    typeof subcategory === "string" ? decodeURIComponent(subcategory) : null;
 
-  const decodedCategory = category ? decodeURIComponent(category) : null;
-  const decodedSubCategory = subcategory
-    ? decodeURIComponent(subcategory)
-    : null;
-
+  // Fetch product data when slug changes
   useEffect(() => {
-    if (slug) {
-      getData(slug).then((productData) => {
-        setData(productData);
-      });
+    if (Array.isArray(slug)) {
+      getData(slug[0]).then(setData); // Use the first element if slug is an array
+    } else if (slug) {
+      getData(slug).then(setData);
     }
   }, [slug]);
 
   return (
-    <div className="">
-      <div className="w-full h-[200px] flex justify-center items-center">
+    <div>
+      <div className="mt-20">
+        <Breadcrumb
+          category={Array.isArray(category) ? category[0] : category}
+        />
+      </div>
+      <div className="w-full h-[100px] flex justify-center items-center">
         {decodedCategory ? (
           <h1 className="text-center text-3xl font-bold">{decodedCategory}</h1>
         ) : (
@@ -69,19 +66,11 @@ export default function CategoryPage() {
         )}
       </div>
 
-      {/* Utiliser les données du produit si elles sont chargées */}
-      {data && (
-        <div>
-          <h2>{data.name}</h2> {/* Affiche le nom du produit */}
-          <p>{data.description}</p> {/* Affiche la description du produit */}
-          {/* Autres détails du produit */}
-        </div>
-      )}
-
-      <div className="">
+      <div>
         <ProductCards
           selectedCategory={decodedCategory}
           selectedSubCategory={decodedSubCategory}
+          productData={data}
         />
       </div>
     </div>
