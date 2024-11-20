@@ -30,6 +30,15 @@ export default function SubCategoryPage({ params }: SubCategoryPageProps) {
       <ProductCards
         selectedCategory={category}
         selectedSubCategory={subcategory}
+        productData={{
+          _id: "",
+          images: [],
+          price: 0,
+          slug: "",
+          categoryName: "",
+          name: "",
+          description: "",
+        }}
       />
     </div>
   );
