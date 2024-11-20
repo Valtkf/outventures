@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { simplifiledProduct } from "@/app/interface";
+import { simplifiledProduct, fullProduct } from "@/app/interface";
 import { fetchProductsByCategory } from "./fetch-products";
 import { capitalizeFirstLetter } from "../../lib/capitalizeLetter"; // <-- Import de la fonction
 import ButtonCart from "../ui/button-cart/ButtonCart";
@@ -9,6 +9,7 @@ import ButtonCart from "../ui/button-cart/ButtonCart";
 interface ProductCardsProps {
   selectedCategory: string | null;
   selectedSubCategory: string | null;
+  productData: fullProduct | null;
 }
 
 export default function ProductCards({
